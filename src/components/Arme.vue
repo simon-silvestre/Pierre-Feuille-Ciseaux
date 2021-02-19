@@ -26,10 +26,11 @@ export default {
         width: 156px;
         height: 156px;
         background: #fff;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 21px 2px -12px inset;
     }
     img {
-        width: 70px;
-        height: 80px;
+        width: 65px;
+        height: 75px;
     }
     .armeBackground, .armeBorder {
         display: flex;

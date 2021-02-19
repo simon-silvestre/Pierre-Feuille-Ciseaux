@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Regles />
+    <transition name="fade">
+      <Regles v-if="regles" />
+    </transition>
     <Score />
     <div class="armesContainer">
       <img class="triangle" src="@/assets/bg-triangle.svg" alt="triangle">
@@ -8,7 +10,7 @@
       <Arme class="ciseaux" couleur="radial-gradient( hsl(39, 89%, 49%), hsl(40, 84%, 53%))" :arme="scissors" />
       <Arme class="pierre" couleur="radial-gradient(hsl(349, 71%, 52%), hsl(349, 70%, 56%))" :arme="rock" />
     </div>
-    <button>rules</button>
+    <button @click="regles = true">rules</button>
   </div>
 </template>
 
@@ -28,7 +30,8 @@ export default {
     return {
       paper: require('@/assets/icon-paper.svg'),
       scissors: require('@/assets/icon-scissors.svg'),
-      rock: require('@/assets/icon-rock.svg')
+      rock: require('@/assets/icon-rock.svg'),
+      regles: false
     }
   }
 }
@@ -63,21 +66,31 @@ export default {
       left: 85px;
       z-index: -1;
     }
-    .pierre, .papier, .ciseaux {
-      position: absolute;
+  }
+  .pierre, .papier, .ciseaux {
+    position: absolute;
+    cursor: pointer;
+    transition: .1s ease;
+
+    &:active {
+      box-shadow: none;
+      transform: translateY(8px);
     }
-    .papier {
-      top: 0;
-      left: 0;
-    }
-    .ciseaux {
-      top: 0;
-      right: 0;
-    }
-    .pierre {
-      bottom: 0;
-      left: calc(50% - 100px);
-    }
+  }
+  .papier {
+    top: 0;
+    left: 0;
+    box-shadow: 0px 8px 0 0 #2a45c0;
+  }
+  .ciseaux {
+    top: 0;
+    right: 0;
+    box-shadow: 0px 8px 0 0 #c76c1b;
+  }
+  .pierre {
+    bottom: 0;
+    left: calc(50% - 100px);
+    box-shadow: 0px 8px 0 0 #9f1834;
   }
   button {
     position: absolute;
@@ -99,5 +112,11 @@ export default {
     &:active {
       transform: scale(1.05);
     }
+  }
+  .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-to {
+      opacity: 0
   }
 </style>

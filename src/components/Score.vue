@@ -13,7 +13,7 @@ export default {
   name: 'Score',
   data() {
     return {
-      score: 12
+      score: 12,
     }
   }
 }
