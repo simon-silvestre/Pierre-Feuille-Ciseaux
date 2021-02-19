@@ -1,8 +1,8 @@
 
 <template>
-    <div class="armeBorder" :style='{ background: couleur }'>
+    <div class="armeBorder" :style='{ background: couleur, boxShadow: shadow }' v-on="$parent.choix ? { click: () => choixArme() } : {}">
         <div class="armeBackground">
-            <img :src="arme" alt="">
+            <img :src="img" alt="">
         </div>
     </div>
 </template>
@@ -12,7 +12,37 @@ export default {
     name: 'Arme',
     props: {
         couleur: String,
-        arme: String
+        img: String,
+        arme: String,
+        shadow: String
+    },
+    methods: {
+        choixArme() {
+            this.$parent.choix = false
+            if(this.arme == 'paper') {
+                this.$parent.index = 0
+            }
+            else if(this.arme == 'scissors') {
+                this.$parent.index = 1
+            }
+            else {
+                this.$parent.index = 2
+            }
+            this.$parent.ordinateur = Math.floor(Math.random() * 3)
+
+            if(this.$parent.index != this.$parent.ordinateur) {
+                if(this.$parent.index == 0 && this.$parent.ordinateur == 2 || this.$parent.index == 2 && this.$parent.ordinateur == 1 || this.$parent.index == 1 && this.$parent.ordinateur == 0 ) {
+                    this.$parent.result = 'win'
+                    this.$parent.score += 1
+                }
+                else {
+                    this.$parent.result = 'lose'
+                }
+            }
+            else {
+                this.$parent.result = 'equal'
+            }
+        }
     }
 }
 </script>

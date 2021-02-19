@@ -4,13 +4,32 @@
       <Regles v-if="regles" />
     </transition>
     <Score />
-    <div class="armesContainer">
-      <img class="triangle" src="@/assets/bg-triangle.svg" alt="triangle">
-      <Arme class="papier" couleur="radial-gradient(hsl(230, 89%, 62%), hsl(230, 89%, 65%))" :arme="paper" />
-      <Arme class="ciseaux" couleur="radial-gradient( hsl(39, 89%, 49%), hsl(40, 84%, 53%))" :arme="scissors" />
-      <Arme class="pierre" couleur="radial-gradient(hsl(349, 71%, 52%), hsl(349, 70%, 56%))" :arme="rock" />
-    </div>
-    <button @click="regles = true">rules</button>
+    <transition name="fade">
+      <div v-if="choix" class="armesContainer">
+        <img class="triangle" src="@/assets/bg-triangle.svg" alt="triangle">
+        <Arme :class="armes[0].nom" :couleur="armes[0].couleur" :img="armes[0].img" :arme="armes[0].nom" :shadow="armes[0].shadow" />
+        <Arme :class="armes[1].nom" :couleur="armes[1].couleur" :img="armes[1].img" :arme="armes[1].nom" :shadow="armes[1].shadow" />
+        <Arme :class="armes[2].nom" :couleur="armes[2].couleur" :img="armes[2].img" :arme="armes[2].nom" :shadow="armes[2].shadow" />
+      </div>
+
+      <div class="combat" v-if="!choix" >
+        <div class="choixPersonnel">
+          <p>you picked</p>
+          <Arme class="combatArmes" :couleur="armes[index].couleur" :img="armes[index].img" :arme="armes[index].nom" :shadow="armes[index].shadow" />
+        </div>
+        <div class="combatResult">
+          <p v-if="result == 'win'">you win</p>
+          <p v-else-if="result == 'lose'">you lose</p>
+          <p v-else-if="result == 'equal'">equality</p>
+          <button @click="choix = true">play again</button>
+        </div>
+        <div class="choixOrdinateur">
+          <p>the house picked</p>
+          <Arme class="combatArmes" :couleur="armes[ordinateur].couleur" :img="armes[ordinateur].img" :arme="armes[ordinateur].nom" :shadow="armes[ordinateur].shadow" />
+        </div>
+      </div>
+    </transition>
+    <button class="reglesBouton" @click="regles = true">rules</button>
   </div>
 </template>
 
@@ -28,10 +47,32 @@ export default {
   },
   data() {
     return {
-      paper: require('@/assets/icon-paper.svg'),
-      scissors: require('@/assets/icon-scissors.svg'),
-      rock: require('@/assets/icon-rock.svg'),
-      regles: false
+      armes: [
+        {
+          nom: 'paper',
+          img: require('@/assets/icon-paper.svg'),
+          couleur: "radial-gradient(hsl(230, 89%, 62%), hsl(230, 89%, 65%))",
+          shadow: "0px 8px 0 0 #2a45c0"
+        },
+        {
+          nom: 'scissors',
+          img: require('@/assets/icon-scissors.svg'),
+          couleur: "radial-gradient( hsl(39, 89%, 49%), hsl(40, 84%, 53%))",
+          shadow: "0px 8px 0 0 #c76c1b"
+        },
+        {
+          nom: 'rock',
+          img: require('@/assets/icon-rock.svg'),
+          couleur: "radial-gradient(hsl(349, 71%, 52%), hsl(349, 70%, 56%))",
+          shadow: "0px 8px 0 0 #9f1834"
+        }
+      ],
+      regles: false,
+      choix: true,
+      index: null,
+      ordinateur: null,
+      result: null,
+      score: 0
     }
   }
 }
@@ -54,6 +95,7 @@ export default {
     width: 100%;
     height: 100vh;
   }
+
   .armesContainer {
     position: relative;
     margin: 100px auto;
@@ -67,7 +109,7 @@ export default {
       z-index: -1;
     }
   }
-  .pierre, .papier, .ciseaux {
+  .rock, .paper, .scissors {
     position: absolute;
     cursor: pointer;
     transition: .1s ease;
@@ -77,22 +119,20 @@ export default {
       transform: translateY(8px);
     }
   }
-  .papier {
+  .paper {
     top: 0;
     left: 0;
-    box-shadow: 0px 8px 0 0 #2a45c0;
   }
-  .ciseaux {
+  .scissors {
     top: 0;
     right: 0;
-    box-shadow: 0px 8px 0 0 #c76c1b;
   }
-  .pierre {
+  .rock {
     bottom: 0;
     left: calc(50% - 100px);
-    box-shadow: 0px 8px 0 0 #9f1834;
   }
-  button {
+
+  .reglesBouton {
     position: absolute;
     bottom: 30px;
     right: 30px;
@@ -118,5 +158,68 @@ export default {
   }
   .fade-enter, .fade-leave-to {
       opacity: 0
+  }
+
+  .combat {
+    display: flex;
+    justify-content: space-between;
+    max-width: 950px;
+    height: 380px;
+    margin: 100px auto;
+
+    .choixPersonnel, .choixOrdinateur {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    p {
+      font-size: 25px;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .combatArmes {
+      width: 280px;
+      height: 280px;
+
+      .armeBackground {
+        width: 218px;
+        height: 218px;
+
+        img {
+          width: 91px;
+          height: 105px;
+        }
+      }
+    }
+    .combatResult {
+      margin: auto 0;
+      text-align: center;
+      p {
+        font-size: 55px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      button {
+        width: 220px;
+        height: 50px;
+        background: #fff;
+        border-radius: 10px;
+        color: hsl(229, 25%, 31%);
+        border: none;
+        outline: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 970px) {
+
   }
 </style>
