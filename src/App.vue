@@ -180,17 +180,19 @@ export default {
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .combatArmes {
-      width: 280px;
-      height: 280px;
+    @media screen and (min-width: 970px) {
+      .combatArmes {
+        width: 280px;
+        height: 280px;
 
-      .armeBackground {
-        width: 218px;
-        height: 218px;
+        .armeBackground {
+          width: 218px;
+          height: 218px;
 
-        img {
-          width: 91px;
-          height: 105px;
+          img {
+            width: 91px;
+            height: 105px;
+          }
         }
       }
     }
@@ -218,8 +220,80 @@ export default {
       }
     }
   }
-
   @media screen and (max-width: 970px) {
+    .combat {
+      max-width: 700px;
+      height: 300px;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .combat {
+      max-width: 500px;
+      height: 500px;
+      flex-wrap: wrap;
 
+      .choixPersonnel, .choixOrdinateur {
+        flex-direction: column-reverse;
+        height: 265px;
+      }
+      .combatResult {
+        order: 3;
+        width: 100%
+      }
+    }
+  }
+  @media screen and (max-width: 530px) {
+    .armesContainer {
+      max-width: 310px;
+      height: 320px;
+      margin: 7vh auto;
+      padding: 0 10%;
+    }
+      .triangle {
+        width: 200px!important;
+        left: calc(50% - 100px)!important;
+      }
+      .armeBorder {
+        width: 133px!important;
+        height: 133px!important;
+
+        .armeBackground {
+          width: 104px;
+          height: 104px;
+
+          img {
+            width: 43px;
+            height: 50px;
+          }
+        }
+      }
+      .paper, .scissors {
+        top: 25px;
+      }
+      .rock {
+        left: calc(50% - 66.5px);
+      }
+
+  }
+  .reglesBouton {
+    right: calc(50% - 62.5px);
+  }
+  .combat {
+    max-width: 310px;
+    height: 55vh;
+    margin: 10vh auto;
+
+    .choixOrdinateur, .choixPersonnel {
+      height: 200px;
+    }
+    p {
+      font-size: 16px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .combat {
+      height: 63vh;
+      margin: 4vh auto;
+    }
   }
 </style>

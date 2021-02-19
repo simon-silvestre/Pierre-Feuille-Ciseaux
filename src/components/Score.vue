@@ -52,4 +52,38 @@ export default {
       color: hsl(229, 25%, 31%);
     }
   }
+
+  @media screen and (max-width: 750px) {
+    .scoreContainer {
+      margin: 0 5%;
+      height: 100px;
+      border-radius: 8px;
+
+      img {
+        height: 100%;
+      }
+      .scoreCard {
+        width: 100px;
+        height: 76px;
+        border-radius: 5px;
+
+        & p:nth-child(1) {
+          font-size: 14px;
+        }
+        & p:nth-child(2) {
+          font-size: 43px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 530px) {
+    .scoreContainer {
+      top: 25px;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .scoreContainer {
+      top: 10px
+    }
+  }
 </style>

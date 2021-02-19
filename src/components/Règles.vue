@@ -59,4 +59,20 @@ export default {
         height: auto;
         margin: 0 auto;
     }
+    @media screen and (max-width: 530px) {
+    .reglesContainer {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+    }
+    .title {
+        justify-content: center;
+
+        img {
+            position: absolute;
+            bottom: 60px;
+            left: calc(50% - 10px);
+        }
+    }
+  }
 </style>
