@@ -273,21 +273,20 @@ export default {
       .rock {
         left: calc(50% - 66.5px);
       }
-
-  }
-  .reglesBouton {
-    right: calc(50% - 62.5px);
-  }
-  .combat {
-    max-width: 310px;
-    height: 55vh;
-    margin: 10vh auto;
-
-    .choixOrdinateur, .choixPersonnel {
-      height: 200px;
+    .reglesBouton {
+      right: calc(50% - 62.5px);
     }
-    p {
-      font-size: 16px;
+    .combat {
+      max-width: 310px;
+      height: 55vh;
+      margin: 10vh auto;
+
+      .choixOrdinateur, .choixPersonnel {
+        height: 200px;
+      }
+      p {
+        font-size: 16px;
+      }
     }
   }
   @media screen and (max-width: 320px) {
